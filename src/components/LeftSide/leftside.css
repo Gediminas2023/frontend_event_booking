@@ -1,0 +1,25 @@
+.left-side {
+    width: 6rem;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-items: center;
+    padding: 117px 0 40px;
+}
+.left-side a{
+    padding-bottom: 34px;
+}
+
+.left-side svg {
+    width: 24px;
+    cursor: pointer;
+}
+.left-side svg + svg {
+    margin-top: 34px;
+}
+.left-side svg:last-child {
+    margin-top: auto;
+}
+.left-side svg.active, .left-side svg:hover {
+    color: #4255d4;
+}

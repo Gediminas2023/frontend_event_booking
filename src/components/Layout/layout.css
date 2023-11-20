@@ -1,0 +1,68 @@
+.wrapper {
+    max-width: 1600px;
+    /* background-color: #0e0e23; */
+	background-color: rgb(30 41 59);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.main-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 25px;
+    overflow: auto;
+    padding-left: 0;
+}
+.user-box {
+	margin-top: 25px;
+	/* display: flex; */
+}
+.user-box + .user-box {
+	margin-top: 20px;
+}
+.user-box + .user-box .cards-wrapper {
+	margin-left: 0;
+	flex-grow: 1;
+	max-width: none;
+}
+.user-box + .user-box .today {
+	margin-left: 30px;
+}
+.user-box + .user-box .cards-header {
+	padding: 20px 30px;
+	justify-content: space-between;
+}
+.user-box .cards-header, .user-box .cards-view {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.user-box .cards-header svg, .user-box .cards-view svg {
+	width: 24px;
+}
+.user-box .cards-header .title, .user-box .cards-view .title {
+	margin: 0 16px;
+	font-size: 15px;
+}
+.user-box .cards-header-date svg, .user-box .cards-view-date svg {
+	width: 30px;
+}
+.user-box .cards-header .cards-button, .user-box .cards-view .cards-button {
+	background: #15193c;
+	padding: 10px 16px;
+	margin-right: 0;
+}
+.user-box .cards-header .cards-button svg, .user-box .cards-view .cards-button svg {
+	width: 16px;
+	margin: 0 2px 0 0;
+}
+.user-box .cards-header .date-wrapper, .user-box .cards-view .date-wrapper {
+	display: flex;
+	align-items: center;
+	margin: auto;
+}
+.user-box .cards-header .date-wrapper .title, .user-box .cards-view .date-wrapper .title {
+	margin: 0 16px;
+}

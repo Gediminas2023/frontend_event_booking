@@ -4,12 +4,12 @@ import { useAppointment } from "../contexts/ApiContext";
 import { useEffect, useState } from "react";
 import avatar from "../assets/200.png";
 import DeleteUserModal from "../components/Modals/DeleteUserModal";
-import EditUserModal from "../components/Modals/EditUserModal";
+import EditUserModal from "../components/Modals/AddEditUserModal";
 
 const User = () => {
   const { deleteUserById } = useAppointment();
   const navigate = useNavigate();
-  const { getUserById, user } = useAppointment();
+  const { getUserById, user, blockUserById } = useAppointment();
   const { id } = useParams();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -22,9 +22,15 @@ const User = () => {
     setShowDeleteModal(!showDeleteModal);
     if (e === "YES") {
       deleteUserById(id);
-      navigate("/");
+      navigate("/users");
       setShowDeleteModal(!showDeleteModal);
     }
+  };
+
+  const blockUser = () => {
+    const data = { name: user.name, email: user.email, blocked: !user.blocked };
+    blockUserById(id, data);
+    navigate("/users");
   };
 
   useEffect(() => {
@@ -56,22 +62,23 @@ const User = () => {
   return (
     <Layout>
       <div className="p-16 dark:bg-slate-800">
+        <button
+          className="p-2 ml-auto bg-white rounded-lg border text-black opacity-30 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+          onClick={() => navigate("/users")}
+        >
+          X
+        </button>
         <div className="p-8 shadow mt-24">
           <div className="grid grid-cols-1 md:grid-cols-3">
-            {/* <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-              <div>
-                <p className="font-bold text-gray-300 text-xl">22</p>
-                <p className="text-gray-400">Friends</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-300 text-xl">10</p>
-                <p className="text-gray-400">Photos</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-300 text-xl">89</p>
-                <p className="text-gray-400">Comments</p>
-              </div>
-            </div> */}
+            <div>
+              <p className="text-gray-400">
+                <button className="text-white py-2 px-4 uppercase rounded bg-green-600 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                  Add appointment
+                </button>
+              </p>
+            </div>
+            {/* </div>  */}
+
             {user && !user.image ? (
               <div className="relative">
                 <img
@@ -103,12 +110,15 @@ const User = () => {
               </button>
               <button
                 onClick={deleteUser}
-                className="text-white py-2 px-4 uppercase rounded bg-red-800 hover:bg-gray-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                className="text-white py-2 px-4 uppercase rounded bg-red-800 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
               >
                 Delete
               </button>
-              <button className="text-white py-2 px-4 uppercase rounded bg-red-800 hover:bg-gray-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-                Block
+              <button
+                onClick={blockUser}
+                className="text-white py-2 px-4 uppercase rounded bg-red-800 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+              >
+                {user && user.blocked ? "Unblock" : "Block"}
               </button>
             </div>
           </div>

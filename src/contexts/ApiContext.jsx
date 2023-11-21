@@ -16,16 +16,20 @@ export const ApiContext = ({ children }) => {
     const db = await axios.get("http://localhost:8080/api/users");
     setUsers(db.data);
   };
+  const saveUser = async (data) => {
+    const db = await axios.post("http://localhost:8080/api/users", data);
+  };
   const getUserById = async (id) => {
     const db = await axios.get(`http://localhost:8080/api/users/${id}`);
     setUser(db.data);
   };
-
   const deleteUserById = async (id) => {
     await axios.delete(`http://localhost:8080/api/users/${id}`);
   };
-
   const updateUserById = async (id, data) => {
+    await axios.put(`http://localhost:8080/api/users/${id}`, data);
+  };
+  const blockUserById = async (id, data) => {
     await axios.put(`http://localhost:8080/api/users/${id}`, data);
   };
 
@@ -41,6 +45,8 @@ export const ApiContext = ({ children }) => {
     user,
     deleteUserById,
     updateUserById,
+    saveUser,
+    blockUserById,
   };
 
   return (

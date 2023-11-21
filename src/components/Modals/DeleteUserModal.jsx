@@ -1,13 +1,13 @@
-const DeleteUserModal = ({ name, setDeleted, setShowDeleteModal }) => {
+const DeleteUserModal = ({ name, deleteUser, setShowDeleteModal }) => {
   return (
     <>
       <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative w-auto my-6 mx-auto max-w-3xl">
+        <div className="relative my-6 mx-auto max-w-3xl w-2/5">
           <div className="border rounded-2xl  shadow-lg relative flex flex-col w-full outline-none focus:outline-none">
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
               <h3 className="text-3xl font-semibold">{name && name}</h3>
               <button
-                className="p-2 ml-auto bg-white rounded-lg border text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                className="p-2 ml-auto bg-white rounded-lg border text-black opacity-30 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                 onClick={() => setShowDeleteModal()}
               >
                 X
@@ -30,7 +30,7 @@ const DeleteUserModal = ({ name, setDeleted, setShowDeleteModal }) => {
               <button
                 className="bg-red-700 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => setDeleted("YES")}
+                onClick={() => deleteUser("YES")}
               >
                 Delete
               </button>

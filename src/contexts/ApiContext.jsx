@@ -17,7 +17,7 @@ export const ApiContext = ({ children }) => {
     setUsers(db.data);
   };
   const saveUser = async (data) => {
-    const db = await axios.post("http://localhost:8080/api/users", data);
+    await axios.post("http://localhost:8080/api/users", data);
   };
   const getUserById = async (id) => {
     const db = await axios.get(`http://localhost:8080/api/users/${id}`);

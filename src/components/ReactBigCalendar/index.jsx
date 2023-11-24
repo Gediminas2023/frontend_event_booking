@@ -33,7 +33,7 @@ export default function ReactBigCalendar() {
   }, []);
 
   return (
-    <div>
+    <div className="col-span-full p-2 xl:col-span-6 bg-white dark:bg-slate-800 shadow-lg border  border-slate-200 dark:border-slate-700">
       <Calendar
         views={["day", "agenda", "work_week", "month"]}
         selectable

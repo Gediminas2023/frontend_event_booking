@@ -61,7 +61,7 @@ const User = () => {
   }
   return (
     <Layout>
-      <div className="p-16 dark:bg-slate-800">
+      <div className=" p-16 dark:bg-slate-800">
         <button
           className="p-2 ml-auto bg-white rounded-lg border text-black opacity-30 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
           onClick={() => navigate("/users")}

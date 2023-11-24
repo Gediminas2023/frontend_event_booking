@@ -1,4 +1,3 @@
-import "./App.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +9,7 @@ import { ApiContext } from "./contexts/ApiContext";
 import Users from "./pages/Users";
 import Home from "./pages/Home";
 import User from "./pages/User";
+import Settings from "./pages/Settings/index";
 
 function App() {
   return (
@@ -39,6 +39,15 @@ function App() {
           element={
             <ApiContext>
               <Users />
+            </ApiContext>
+          }
+        />
+        <Route
+          exact
+          path="/settings"
+          element={
+            <ApiContext>
+              <Settings />
             </ApiContext>
           }
         />

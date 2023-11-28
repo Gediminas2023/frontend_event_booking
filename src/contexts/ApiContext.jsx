@@ -34,9 +34,13 @@ export const ApiContext = ({ children }) => {
   };
 
   useEffect(() => {
-    setLoading(false);
-    getUser();
-  }, [users]);
+    const fetchData = async () => {
+      await getUser();
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   const value = {
     loading,

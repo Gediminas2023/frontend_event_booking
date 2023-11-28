@@ -77,7 +77,6 @@ const User = () => {
                 </button>
               </p>
             </div>
-            {/* </div>  */}
 
             {user && !user.image ? (
               <div className="relative">
@@ -135,7 +134,6 @@ const User = () => {
                   {e.start}
                 </p>
               ))}
-            {/* <p className="mt-2 text-gray-400">University of Computer Science</p> */}
           </div>
           <div className="mt-12 flex flex-col justify-center">
             <p className="text-gray-400 text-center font-light lg:px-16">

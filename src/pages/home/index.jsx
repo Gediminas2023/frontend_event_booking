@@ -1,51 +1,47 @@
-import Layout from "../../components/Layout";
+import HomeLayout from "../../components/HomeLayout";
 import "./Home.css";
-import { BsPeopleFill, BsFillBellFill } from "react-icons/bs";
-import { GiCrossedSlashes, GiAtomicSlashes } from "react-icons/gi";
-import { useAppointment } from "../../contexts/ApiContext";
-import users from "../../constants/users";
+import profile from "../../assets/profile.png";
+import { Link } from "react-router-dom";
+import About from "../About";
+import Services from "../Services";
+import Portfolios from "../portfolios";
+import Contact from "../Contact";
 
 const Home = () => {
-  // const { users } = useAppointment();
   return (
-    <Layout>
-      <main className="main-container ">
-        <div className="main-title">
-          <h3 className="uppercase">DASHBOARD</h3>
+    <HomeLayout>
+      <div className="container grid-2">
+        <div className="column-1">
+          <h1 className="header-title">Feel The Beauty</h1>
+          <p className="text">You can book appoitment now</p>
+          <Link href="/calendar" className="btn">
+            Book Now
+          </Link>
+          <div className="social">
+            <Link href="#">
+              <i className="fab fa-facebook-f"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-youtube"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-instagram"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-linkedin-in"></i>
+            </Link>
+          </div>
         </div>
 
-        <div className="main-cards text-gray-100">
-          <div className="card transition ease-in-out delay-100 hover:-translate-y-1 ">
-            <div className="card-inner">
-              <h3 className="uppercase">today</h3>
-              <GiAtomicSlashes className="card_icon animate-spin" />
-            </div>
-            <h1>3</h1>
-          </div>
-          <div className="card transition ease-in-out delay-100 hover:-translate-y-1">
-            <div className="card-inner">
-              <h3 className="uppercase">tomorrow</h3>
-              <GiCrossedSlashes className="card_icon animate-wiggle" />
-            </div>
-            <h1>4</h1>
-          </div>
-          <div className="card transition ease-in-out delay-100 hover:-translate-y-1">
-            <div className="card-inner">
-              <h3 className="uppercase">CUSTOMERS</h3>
-              <BsPeopleFill className="card_icon animate-bounce" />
-            </div>
-            <h1>{users.length}</h1>
-          </div>
-          <div className="card transition ease-in-out delay-100 hover:-translate-y-1">
-            <div className="card-inner">
-              <h3 className="uppercase">ALERTS</h3>
-              <BsFillBellFill className="card_icon animate-ping" />
-            </div>
-            <h1>2</h1>
-          </div>
+        <div className="column-2 image ">
+          <img src={profile} className="img-element z-index " alt="" />
         </div>
-      </main>
-    </Layout>
+      </div>
+      <About />
+      <Services />
+      <Portfolios />
+      <Contact />
+    </HomeLayout>
   );
 };
 

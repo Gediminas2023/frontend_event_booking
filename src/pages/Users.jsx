@@ -6,11 +6,11 @@ import { useState } from "react";
 import EditUserModal from "../components/Modals/AddEditUserModal";
 import SearchUserModal from "../components/Modals/SearchUserModal";
 
-import users from "../constants/users";
+// import users from "../constants/users";
 import Pagination from "../components/Pagination";
 
 const Users = () => {
-  // const { users } = useAppointment();
+  const { users } = useAppointment();
   const [showEditModal, setShowEditModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
 

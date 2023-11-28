@@ -6,10 +6,13 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dash";
 import { ApiContext } from "./contexts/ApiContext";
+import { SettingsApiContext } from "./contexts/SettingsContext";
 import Users from "./pages/Users";
 import Home from "./pages/Home";
 import User from "./pages/User";
 import Settings from "./pages/Settings/index";
+import Appointment from "./pages/Appointment";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -26,10 +29,28 @@ function App() {
         />
         <Route
           exact
-          path="/appointments"
+          path="/about"
+          element={
+            <ApiContext>
+              <About />
+            </ApiContext>
+          }
+        />
+        <Route
+          exact
+          path="/dashboard"
           element={
             <ApiContext>
               <Dashboard />
+            </ApiContext>
+          }
+        />
+        <Route
+          exact
+          path="/appointments"
+          element={
+            <ApiContext>
+              <Appointment />
             </ApiContext>
           }
         />
@@ -46,9 +67,9 @@ function App() {
           exact
           path="/settings"
           element={
-            <ApiContext>
+            <SettingsApiContext>
               <Settings />
-            </ApiContext>
+            </SettingsApiContext>
           }
         />
         <Route

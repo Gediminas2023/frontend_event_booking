@@ -1,0 +1,37 @@
+.contact {
+    position: relative;
+    width: 100%;
+    padding: 13.5rem 0 8.5rem;
+  }
+.contact:before,
+.contact:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+  left: 0;
+}
+.contact:before {
+  top: 0;
+  height: 40%;
+  background: url("../../assets/map.png") center center / cover;
+}
+
+.contact:after {
+  top: 40%;
+  height: 60%;
+  background-color: var(--main-color);
+}
+
+.contact-box {
+  width: 100%;
+  background-color: var(--light-one);
+  width: 100%;
+  border-radius: 45px;
+  padding: 2.5rem 2.5rem;
+  text-align: center;
+}
+
+.contact-info {
+  padding-right: 2rem;
+}

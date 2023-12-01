@@ -9,7 +9,7 @@ export const useSettings = () => {
 
 export const SettingsApiContext = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [date, setDate] = useState([]);
+  const [dateList, setDateList] = useState([]);
 
   const getDate = async () => {
     const db = await axios.get("http://localhost:8080/api/settings/date");
@@ -18,31 +18,34 @@ export const SettingsApiContext = ({ children }) => {
       date: new Date(item.date),
     }));
 
-    setDate(formattedDates);
+    setDateList(formattedDates);
   };
-  const saveDate = async (data) => {
-    await data.map((e) => {
+  const saveAndUpdateDate = async (data) => {
+    await data.forEach((e) => {
       axios.post("http://localhost:8080/api/settings/date", e);
     });
+    await getDate();
   };
 
   const deleteDataById = async (id) => {
     await axios.delete(`http://localhost:8080/api/settings/date/${id}`);
+    await getDate();
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await getDate();
       setLoading(false);
     };
+
     fetchData();
   }, []);
 
   const value = {
     loading,
-    date,
-    saveDate,
-    getDate,
+    dateList,
+    saveAndUpdateDate,
     deleteDataById,
   };
 

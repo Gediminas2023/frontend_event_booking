@@ -13,6 +13,7 @@ import User from "./pages/User";
 import Settings from "./pages/Settings/index";
 import Appointment from "./pages/Appointment";
 import About from "./pages/About";
+import Calendar from "./pages/Calendar";
 
 function App() {
   return (
@@ -33,6 +34,17 @@ function App() {
           element={
             <ApiContext>
               <About />
+            </ApiContext>
+          }
+        />
+        <Route
+          exact
+          path="/calendar"
+          element={
+            <ApiContext>
+              <SettingsApiContext>
+                <Calendar />
+              </SettingsApiContext>
             </ApiContext>
           }
         />

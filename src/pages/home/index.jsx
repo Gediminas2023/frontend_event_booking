@@ -14,20 +14,20 @@ const Home = () => {
         <div className="column-1">
           <h1 className="header-title">Feel The Beauty</h1>
           <p className="text">You can book appoitment now</p>
-          <Link href="/calendar" className="btn">
+          <Link to="/calendar" className="btn">
             Book Now
           </Link>
           <div className="social">
-            <Link href="#">
+            <Link to="#">
               <i className="fab fa-facebook-f"></i>
             </Link>
-            <Link href="#">
+            <Link to="#">
               <i className="fab fa-youtube"></i>
             </Link>
-            <Link href="#">
+            <Link to="#">
               <i className="fab fa-instagram"></i>
             </Link>
-            <Link href="#">
+            <Link to="#">
               <i className="fab fa-linkedin-in"></i>
             </Link>
           </div>

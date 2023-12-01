@@ -15,7 +15,7 @@ const Navbar = () => {
             <img src={logo} alt="" />
           </div>
 
-          <div className="links">
+          <div className="links text-gray-500 dark:text-gray-300">
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -35,7 +35,7 @@ const Navbar = () => {
                 <Link to="/dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link href="/calendar" className="active">
+                <Link to="/calendar" className="active">
                   Book now
                 </Link>
               </li>

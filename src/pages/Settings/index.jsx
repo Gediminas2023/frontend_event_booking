@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import "./Settings.css";
 import Layout from "../../components/Layout";
 import Calendar from "react-calendar";
 import TimePicker from "react-time-picker";
 import { useSettings } from "../../contexts/SettingsContext";
 import { Link } from "react-router-dom";
+import { isToday } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-time-picker/dist/TimePicker.css";
@@ -13,14 +13,9 @@ import "react-calendar/dist/Calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Settings = () => {
-  const navigate = useNavigate();
-  const { date, getDate, saveDate, deleteDataById } = useSettings();
-  const [selectedDates, setSelectedDates] = useState(date);
+  const { dateList, saveAndUpdateDate, deleteDataById } = useSettings();
+  const [selectedDates, setSelectedDates] = useState(dateList);
   const [selectedDate, setSelectedDate] = useState(new Date());
-
-  useEffect(() => {
-    getDate();
-  }, [selectedDates]);
 
   const handleDateChange = (date) => {
     const newSelectedDates = [...selectedDates];
@@ -67,8 +62,11 @@ const Settings = () => {
   };
 
   const removeByIdDate = (id) => {
-    deleteDataById(id);
-    navigate("/settings");
+    if (id) {
+      deleteDataById(id);
+    } else {
+      console.log(selectedDates.filter((e) => e.id === id));
+    }
     toast.success("Deleted sucessfully");
   };
 
@@ -90,9 +88,8 @@ const Settings = () => {
 
   const handleSaveSubmit = () => {
     const transformedObject = selectedDates.length > 0 ? selectedDates : [];
-    saveDate(transformedObject);
+    saveAndUpdateDate(transformedObject);
     toast.success("Saved sucessfully");
-    navigate("/settings");
   };
 
   function formatDate(d) {
@@ -156,42 +153,48 @@ const Settings = () => {
               </thead>
 
               <tbody className="text-sm divide-y divide-slate-100 dark:divide-slate-700">
-                {date &&
-                  selectedDates.map((date, i) => (
-                    <tr key={i}>
-                      <td className="p-2 whitespace-nowrap ">
-                        <Link to="/">
-                          <div className="flex items-center ">
-                            {formatDate(date.date)}
+                {dateList &&
+                  selectedDates
+                    .filter(
+                      (e) =>
+                        isToday(new Date(e.date)) ||
+                        new Date(e.date) > new Date()
+                    )
+                    .map((date, i) => (
+                      <tr key={i}>
+                        <td className="p-2 whitespace-nowrap ">
+                          <Link to="/">
+                            <div className="flex items-center ">
+                              {formatDate(date.date)}
+                            </div>
+                          </Link>
+                        </td>
+                        <td className="p-2 whitespace-nowrap">
+                          <div className="text-left">
+                            <TimePicker
+                              onChange={(e) => handleHourStart(date.date, e)}
+                              value={date.times.start}
+                            />
                           </div>
-                        </Link>
-                      </td>
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-left">
-                          <TimePicker
-                            onChange={(e) => handleHourStart(date.date, e)}
-                            value={date.times.start}
-                          />
-                        </div>
-                      </td>
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-left">
-                          <TimePicker
-                            onChange={(e) => handleHourEnd(date.date, e)}
-                            value={date.times.end}
-                          />
-                        </div>
-                      </td>
-                      <td className="p-2 whitespace-nowrap">
-                        <button
-                          onClick={() => removeByIdDate(date.id)}
-                          className="border border-gray-500 text-red-700 font-semibold p-1"
-                        >
-                          X
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td className="p-2 whitespace-nowrap">
+                          <div className="text-left">
+                            <TimePicker
+                              onChange={(e) => handleHourEnd(date.date, e)}
+                              value={date.times.end}
+                            />
+                          </div>
+                        </td>
+                        <td className="p-2 whitespace-nowrap">
+                          <button
+                            onClick={() => removeByIdDate(date.id)}
+                            className="border border-gray-500 text-red-700 font-semibold p-1"
+                          >
+                            X
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
             {selectedDates.map((e) => e.date) ? (

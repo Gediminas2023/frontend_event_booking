@@ -33,10 +33,6 @@ const User = () => {
     navigate("/users");
   };
 
-  useEffect(() => {
-    getUserById(id);
-  }, [id]);
-
   if (showEditModal) {
     return (
       <Layout>
@@ -122,7 +118,7 @@ const User = () => {
             </div>
           </div>
           <div className="mt-20 text-center border-b pb-12">
-            <h1 className="text-4xl font-medium text-gray-300">
+            <h1 className="text-4xl font-medium text-gray-500">
               {user && user.name},
               <span className="font-light pl-4 text-gray-500">
                 {user && user.email}

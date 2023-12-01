@@ -102,6 +102,9 @@ const Users = () => {
                   <th className="p-2 whitespace-nowrap">
                     <div className="font-semibold text-left">Email</div>
                   </th>
+                  <th className="p-2 whitespace-nowrap">
+                    <div className="font-semibold text-left">Role</div>
+                  </th>
                 </tr>
               </thead>
 
@@ -124,7 +127,7 @@ const Users = () => {
                             <div
                               className={
                                 user.blocked
-                                  ? "font-medium text-slate-800 dark:text-red-700"
+                                  ? "font-medium text-red-600 dark:text-red-700"
                                   : "font-medium text-slate-800 dark:text-slate-100"
                               }
                             >
@@ -134,7 +137,28 @@ const Users = () => {
                         </Link>
                       </td>
                       <td className="p-2 whitespace-nowrap">
-                        <div className="text-left">{user.email}</div>
+                        <div
+                          className={
+                            user.blocked
+                              ? "font-medium text-red-600 dark:text-red-700"
+                              : "font-medium text-slate-800 dark:text-slate-100"
+                          }
+                        >
+                          {user.email}
+                        </div>
+                      </td>
+                      <td className="p-2 whitespace-nowrap">
+                        <div
+                          className={
+                            user.roles === "WORKER"
+                              ? "text-yellow-500"
+                              : user.roles === "ADMIN"
+                              ? "text-green-500"
+                              : ""
+                          }
+                        >
+                          {user.roles}
+                        </div>
                       </td>
                     </tr>
                   );

@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="footer pb-6">
       <div className="bottom-footer">
         <div className="copyright">
-          <p className="text">
+          <p className="text ">
             Copyright &copy; 2023 All rights reserved |
             <span> BryLashesArt</span>
           </p>

@@ -6,8 +6,7 @@ import TimePicker from "react-time-picker";
 import { useSettings } from "../../contexts/SettingsContext";
 import { Link } from "react-router-dom";
 import { isToday } from "date-fns";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import "react-time-picker/dist/TimePicker.css";
 import "react-calendar/dist/Calendar.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -109,17 +108,6 @@ const Settings = () => {
   return (
     <Layout>
       <div className="col-span-full xl:col-span-6 bg-white dark:bg-slate-800 shadow-lg border  border-slate-200 dark:border-slate-700">
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
         <Calendar
           onChange={handleDateChange}
           value={selectedDate}

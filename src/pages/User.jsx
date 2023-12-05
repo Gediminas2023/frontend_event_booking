@@ -33,6 +33,10 @@ const User = () => {
     navigate("/users");
   };
 
+  useEffect(() => {
+    getUserById(id);
+  }, [id]);
+
   if (showEditModal) {
     return (
       <Layout>

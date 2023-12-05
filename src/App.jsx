@@ -12,8 +12,9 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 import Settings from "./pages/Settings/index";
 import Appointment from "./pages/Appointment";
-import About from "./pages/About";
 import Calendar from "./pages/Calendar";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 function App() {
   return (
@@ -30,13 +31,23 @@ function App() {
         />
         <Route
           exact
-          path="/about"
+          path="/login"
           element={
             <ApiContext>
-              <About />
+              <Login />
             </ApiContext>
           }
         />
+        <Route
+          exact
+          path="/signup"
+          element={
+            <ApiContext>
+              <Signup />
+            </ApiContext>
+          }
+        />
+
         <Route
           exact
           path="/calendar"

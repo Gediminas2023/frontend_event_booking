@@ -3,10 +3,9 @@ import "./dash.css";
 import { BsPeopleFill, BsFillBellFill } from "react-icons/bs";
 import { GiCrossedSlashes, GiAtomicSlashes } from "react-icons/gi";
 import { useAppointment } from "../../contexts/ApiContext";
-import users from "../../constants/users";
 
 const Home = () => {
-  // const { users } = useAppointment();
+  const { users } = useAppointment();
   return (
     <Layout>
       <main className="main-container ">
@@ -18,7 +17,7 @@ const Home = () => {
           <div className="card transition ease-in-out delay-100 hover:-translate-y-1 ">
             <div className="card-inner">
               <h3 className="uppercase">today</h3>
-              <GiAtomicSlashes className="card_icon animate-spin" />
+              <GiAtomicSlashes className="card_icon animate-spins" />
             </div>
             <h1>3</h1>
           </div>

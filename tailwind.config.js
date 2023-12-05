@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        spin: "spin 4s linear infinite",
+        spins: "spins 4s linear infinite",
         wiggle: "wiggle 1s ease-in-out infinite",
       },
       keyframes: {
@@ -13,7 +13,7 @@ export default {
           "0%, 100%": { transform: "rotate(-6deg)" },
           "50%": { transform: "rotate(6deg)" },
         },
-        spin: {
+        spins: {
           from: { transform: "rotate(360deg)" },
           to: { transform: "rotate(0deg)" },
         },

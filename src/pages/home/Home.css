@@ -1,6 +1,9 @@
+.header-content {
+  height: 100vh;
+}
 
 .header-content .container.grid-2 {
-  height: 90%;
+  height: 100%;
   grid-template-columns: 2.5fr 3.5fr;
   padding-bottom: 2.5rem;
   text-align: left;
@@ -39,7 +42,7 @@
 .social {
   position: absolute;
   display: flex;
-  bottom: 10%;
+  bottom: 0px;
   left: 144px;
 }
 .social i {

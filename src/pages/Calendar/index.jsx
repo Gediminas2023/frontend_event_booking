@@ -89,7 +89,7 @@ const Calendars = () => {
 
   return (
     <Layout>
-      <section className=" h-screen ">
+      <section className="max-w-screen-xl h-screen mt-24 px-8 xl:px-16 mx-auto">
         <div className="section-header">
           <h3 className="title">Appointment</h3>
         </div>

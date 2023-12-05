@@ -1,4 +1,4 @@
-import axios from "axios";
+import http from "../api/DB";
 import React, { useContext, useEffect, useState } from "react";
 
 const SettingsContext = React.createContext();
@@ -12,23 +12,27 @@ export const SettingsApiContext = ({ children }) => {
   const [dateList, setDateList] = useState([]);
 
   const getDate = async () => {
-    const db = await axios.get("http://localhost:8080/api/settings/date");
-    const formattedDates = db.data.map((item) => ({
-      ...item,
-      date: new Date(item.date),
-    }));
+    try {
+      const db = await http.get("/settings/date");
+      const formattedDates = db.data.map((item) => ({
+        ...item,
+        date: new Date(item.date),
+      }));
 
-    setDateList(formattedDates);
+      setDateList(formattedDates);
+    } catch (error) {
+      console.error("Error fetching date:", error);
+    }
   };
   const saveAndUpdateDate = async (data) => {
     await data.forEach((e) => {
-      axios.post("http://localhost:8080/api/settings/date", e);
+      http.post("/settings/date", e);
     });
     await getDate();
   };
 
   const deleteDataById = async (id) => {
-    await axios.delete(`http://localhost:8080/api/settings/date/${id}`);
+    await http.delete(`/settings/date/${id}`);
     await getDate();
   };
 

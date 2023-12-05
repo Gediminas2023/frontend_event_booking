@@ -1,3 +1,8 @@
 import axios from "axios";
 
-export const db = await axios.get("http://localhost:8080/api/users");
+export default axios.create({
+  baseURL: "http://localhost:8080/api",
+  headers: {
+    "Content-type": "application/json",
+  },
+});

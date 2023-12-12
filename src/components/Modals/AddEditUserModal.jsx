@@ -6,32 +6,50 @@ const DeleteUserModal = ({ user, setShowEditModal }) => {
   const { updateUserById, saveUser } = useAppointment();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [userName, setUserName] = useState((user && user.name) || "");
-  const [userEmail, setUserEmail] = useState((user && user.email) || "");
-  const [userRole, setUserRole] = useState((user && user.roles) || "USER");
+  const [username, setUsername] = useState((user && user.username) || "");
+  const [email, setEmail] = useState((user && user.email) || "");
+  const [roles, setRole] = useState((user && user.roles) || "user");
+  const [blocked, setBlocked] = useState((user && user.blocked) || false);
+  const [password, setPassword] = useState((user && user.password) || "");
 
   const handlerUserUpdate = () => {
-    const data = { name: userName, email: userEmail, roles: userRole };
+    const data = {
+      username: username,
+      email: email,
+      password: password,
+      role: [roles],
+    };
+
+    // const data = {
+    //   username: userName,
+    //   email: userEmail,
+    //   roles: [],
+    //   blocked: blocked,
+    //   password: password,
+    // };
     if (user) {
       updateUserById(id, data);
 
       setShowEditModal(false);
-      navigate("/users");
+      navigate("/dashboard/users");
     } else {
       saveUser(data);
       setShowEditModal(false);
-      navigate("/users");
+      navigate("/dashboard/users");
     }
   };
 
   const addName = (e) => {
-    setUserName(e);
+    setUsername(e);
   };
   const addEmail = (e) => {
-    setUserEmail(e);
+    setEmail(e);
+  };
+  const addPass = (e) => {
+    setPassword(e);
   };
   const addRole = (e) => {
-    setUserRole(e);
+    setRole(e);
   };
 
   return (
@@ -56,25 +74,32 @@ const DeleteUserModal = ({ user, setShowEditModal }) => {
                 className="bg-transparent pb-2 border-b w-18 pt-4 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                 type="name"
                 placeholder="Name"
-                value={userName}
+                value={username}
               />
               <input
                 onChange={(e) => addEmail(e.target.value)}
                 className="bg-transparent pb-2 border-b w-18 pt-4 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                 type="email"
                 placeholder="Email"
-                value={userEmail}
+                value={email}
+              />
+              <input
+                onChange={(e) => addPass(e.target.value)}
+                className="bg-transparent pb-2 border-b w-18 pt-4 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                type="password"
+                placeholder="Password"
+                value={password}
               />
 
               <select
                 id="underline_select"
-                className="block py-2.5 px-0 w-full  bg-transparent border-0 border-b border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                value={userRole}
+                className="bg-transparent pb-2 border-b w-18 pt-4 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                value={roles}
                 onChange={(e) => addRole(e.target.value)}
               >
-                <option value="USER">User</option>
-                <option value="ADMIN">Admin</option>
-                <option value="WORKER">Worker</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+                <option value="mod">Moderator</option>
               </select>
             </div>
           </div>

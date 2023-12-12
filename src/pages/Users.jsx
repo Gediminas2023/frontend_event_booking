@@ -2,15 +2,14 @@ import Layout from "../components/Layout";
 import avatar from "../assets/avatar.png";
 import { useAppointment } from "../contexts/ApiContext";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditUserModal from "../components/Modals/AddEditUserModal";
 import SearchUserModal from "../components/Modals/SearchUserModal";
 
-// import users from "../constants/users";
 import Pagination from "../components/Pagination";
 
 const Users = () => {
-  const { users } = useAppointment();
+  const { users, getUser } = useAppointment();
   const [showEditModal, setShowEditModal] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
 
@@ -21,6 +20,10 @@ const Users = () => {
   const currentRecords = users.slice(indexOfFirstRecord, indexOfLastRecord);
   const nPages = Math.ceil(users.length / recordsPerPage);
   const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   const goToNextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
@@ -113,7 +116,7 @@ const Users = () => {
                   return (
                     <tr key={user.id}>
                       <td className="p-2 whitespace-nowrap ">
-                        <Link to={`/user/` + user.id}>
+                        <Link to={`/users/` + user.id}>
                           <div className="flex items-center text-red-700">
                             <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
                               <img
@@ -121,7 +124,7 @@ const Users = () => {
                                 src={user.image ? user.image : avatar}
                                 width="40"
                                 height="40"
-                                alt={user.name}
+                                alt={user.username}
                               />
                             </div>
                             <div
@@ -131,7 +134,7 @@ const Users = () => {
                                   : "font-medium text-slate-800 dark:text-slate-100"
                               }
                             >
-                              {user.name}
+                              {user.username}
                             </div>
                           </div>
                         </Link>
@@ -149,15 +152,17 @@ const Users = () => {
                       </td>
                       <td className="p-2 whitespace-nowrap">
                         <div
-                          className={
-                            user.roles === "WORKER"
+                          className={user.roles.map((e) =>
+                            e.name === "ROLE_MODERATOR"
                               ? "text-yellow-500"
-                              : user.roles === "ADMIN"
-                              ? "text-green-500"
-                              : ""
-                          }
+                              : user.roles.map((e) =>
+                                  e.name === "ROLE_ADMIN"
+                                    ? "text-green-500"
+                                    : ""
+                                )
+                          )}
                         >
-                          {user.roles}
+                          {user.roles.map((e) => e.name)}
                         </div>
                       </td>
                     </tr>

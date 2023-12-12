@@ -6,7 +6,10 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dash";
 import { ApiContext } from "./contexts/ApiContext";
+import { AuthUserContext } from "./contexts/AuthContext";
 import { SettingsApiContext } from "./contexts/SettingsContext";
+import PrivateRoute from "./util/PrivateRoute";
+import PrivateAdminRoute from "./util/PrivateAdminRoute";
 import Users from "./pages/Users";
 import Home from "./pages/Home";
 import User from "./pages/User";
@@ -15,97 +18,87 @@ import Appointment from "./pages/Appointment";
 import Calendar from "./pages/Calendar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <ApiContext>
-              <Home />
-            </ApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/login"
-          element={
-            <ApiContext>
-              <Login />
-            </ApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/signup"
-          element={
-            <ApiContext>
-              <Signup />
-            </ApiContext>
-          }
-        />
+      <AuthUserContext>
+        <SettingsApiContext>
+          <ApiContext>
+            <Routes>
+              <Route
+                exact
+                path="/calendar"
+                element={
+                  <PrivateRoute>
+                    <Calendar />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                exact
+                path="/dashboard"
+                element={
+                  <PrivateAdminRoute>
+                    <Dashboard />
+                  </PrivateAdminRoute>
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/appointments"
+                element={
+                  <PrivateAdminRoute>
+                    <Appointment />
+                  </PrivateAdminRoute>
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/users"
+                element={
+                  <PrivateAdminRoute>
+                    <Users />
+                  </PrivateAdminRoute>
+                }
+              />
+              <Route
+                exact
+                path="/dashboard/settings"
+                element={
+                  <PrivateAdminRoute>
+                    <Settings />
+                  </PrivateAdminRoute>
+                }
+              />
+              <Route
+                exact
+                path="/users/:id"
+                element={
+                  <PrivateAdminRoute>
+                    <User />
+                  </PrivateAdminRoute>
+                }
+              />
+              <Route
+                exact
+                path="/profile"
+                element={
+                  <PrivateRoute>
+                    <Profile />
+                  </PrivateRoute>
+                }
+              />
 
-        <Route
-          exact
-          path="/calendar"
-          element={
-            <ApiContext>
-              <SettingsApiContext>
-                <Calendar />
-              </SettingsApiContext>
-            </ApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/dashboard"
-          element={
-            <ApiContext>
-              <Dashboard />
-            </ApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/appointments"
-          element={
-            <ApiContext>
-              <Appointment />
-            </ApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/users"
-          element={
-            <ApiContext>
-              <Users />
-            </ApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/settings"
-          element={
-            <SettingsApiContext>
-              <Settings />
-            </SettingsApiContext>
-          }
-        />
-        <Route
-          exact
-          path="/user/:id"
-          element={
-            <ApiContext>
-              <User />
-            </ApiContext>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/signup" element={<Signup />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </ApiContext>
+        </SettingsApiContext>
+      </AuthUserContext>
     </Router>
   );
 }

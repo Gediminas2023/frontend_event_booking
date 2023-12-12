@@ -2,30 +2,19 @@ import React, { useState } from "react";
 import http from "../api/DB";
 import HomeLayout from "./HomeLayout";
 import login from "../assets/login.jpg";
-import { useAppointment } from "../contexts/ApiContext";
-import { toast } from "react-toastify";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const Signup = () => {
-  const { saveUser, errors } = useAppointment();
-  const [name, setName] = useState("");
+  const { signup } = useAuthContext();
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loadingApi, setLoadingApi] = useState(false);
 
   const handleClick = async () => {
-    const data = { name, email, password };
     if (password === confirmPassword) {
-      await http
-        .post("/users", data)
-        .then((res) => {
-          toast.success(res.data.message);
-        })
-        .catch((err) => {
-          toast.error(err.response.data.validationErrors.name),
-            toast.error(err.response.data.validationErrors.email),
-            toast.error(err.response.data.validationErrors.password);
-        });
+      signup(username, email, password);
     } else {
       toast.error("Password confirm not valid");
     }
@@ -100,11 +89,11 @@ const Signup = () => {
                 <div className="relative mb-6">
                   <input
                     type="text"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
                     className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 "
                     id="exampleFormControlInput2"
-                    placeholder="Name"
+                    placeholder="Username"
                   />
                 </div>
 
@@ -115,7 +104,7 @@ const Signup = () => {
                     value={email}
                     className="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 "
                     id="exampleFormControlInput3"
-                    placeholder="Email address"
+                    placeholder="Email"
                   />
                 </div>
 

@@ -10,10 +10,11 @@ export const useSettings = () => {
 export const SettingsApiContext = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [dateList, setDateList] = useState([]);
+  const [dateListByStuff, setDateListNySuff] = useState([]);
 
   const getDate = async () => {
     try {
-      const db = await http.get("/settings/date");
+      const db = await http.get("/dashboard/settings/date");
       const formattedDates = db.data.map((item) => ({
         ...item,
         date: new Date(item.date),
@@ -24,16 +25,37 @@ export const SettingsApiContext = ({ children }) => {
       console.error("Error fetching date:", error);
     }
   };
+
+  const getDateByStuff = async (id) => {
+    try {
+      const db = await http.post("/dashboard/settings/date/stuff", {
+        stuffId: id,
+      });
+
+      const formattedDates = db.data.map((item) => ({
+        ...item,
+        date: new Date(item.date),
+      }));
+
+      setDateListNySuff(formattedDates);
+    } catch (error) {
+      console.error("Error fetching date:", error);
+    }
+  };
+
   const saveAndUpdateDate = async (data) => {
     await data.forEach((e) => {
-      http.post("/settings/date", e);
+      http.post("/dashboard/settings/date", e);
     });
-    await getDate();
   };
 
   const deleteDataById = async (id) => {
-    await http.delete(`/settings/date/${id}`);
-    await getDate();
+    await http
+      .delete(`/dashboard/settings/date/${id}`)
+      .then(() => {
+        getDate();
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -51,6 +73,8 @@ export const SettingsApiContext = ({ children }) => {
     dateList,
     saveAndUpdateDate,
     deleteDataById,
+    getDateByStuff,
+    dateListByStuff,
   };
 
   return (

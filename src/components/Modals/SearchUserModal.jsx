@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const DeleteUserModal = ({ users, handleSearchChange }) => {
+const SearchUserModal = ({ users, handleSearchChange }) => {
   const [filteredUsers, setFilteredUsers] = useState();
 
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
 
     const filteredItems = users.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase())
+      user.username.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredUsers(filteredItems);
   };
@@ -46,8 +46,8 @@ const DeleteUserModal = ({ users, handleSearchChange }) => {
 
             {filteredUsers &&
               filteredUsers.map((user) => (
-                <Link to={`/user/` + user.id} key={user.id}>
-                  {user.name}
+                <Link to={`/users/` + user.id} key={user.id}>
+                  {user.username}
                 </Link>
               ))}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
@@ -66,4 +66,4 @@ const DeleteUserModal = ({ users, handleSearchChange }) => {
   );
 };
 
-export default DeleteUserModal;
+export default SearchUserModal;

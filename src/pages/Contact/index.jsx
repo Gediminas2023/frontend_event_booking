@@ -15,17 +15,14 @@ const Contact = () => {
               <div className="contact-info">
                 <h3 className="title">Get in touch</h3>
                 <p className="text">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-                  rerum odio incidunt doslorum officia dolorem eaque aprim?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
                 <div className="information-wrap">
                   <div className="information">
                     <div className="contact-icon">
                       <i className="fas fa-map-marker-alt"></i>
                     </div>
-                    <p className="info-text">
-                      92 Cherry Drive Unimodale, NY 11553
-                    </p>
+                    <p className="info-text">Vilniaus g, Vilnius</p>
                   </div>
 
                   <div className="information">
@@ -39,7 +36,7 @@ const Contact = () => {
                     <div className="contact-icon">
                       <i className="fas fa-phone-alt"></i>
                     </div>
-                    <p className="info-text">123-456-789</p>
+                    <p className="info-text">+370-456-78922</p>
                   </div>
                 </div>
               </div>

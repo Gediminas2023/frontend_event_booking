@@ -10,7 +10,7 @@ export const useSettings = () => {
 export const SettingsApiContext = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [dateList, setDateList] = useState([]);
-  const [dateListByStuff, setDateListNySuff] = useState([]);
+  const [dateListByStuff, setDateListBySuff] = useState([]);
 
   const getDate = async () => {
     try {
@@ -31,13 +31,11 @@ export const SettingsApiContext = ({ children }) => {
       const db = await http.post("/dashboard/settings/date/stuff", {
         stuffId: id,
       });
-
       const formattedDates = db.data.map((item) => ({
         ...item,
         date: new Date(item.date),
       }));
-
-      setDateListNySuff(formattedDates);
+      setDateListBySuff(formattedDates);
     } catch (error) {
       console.error("Error fetching date:", error);
     }

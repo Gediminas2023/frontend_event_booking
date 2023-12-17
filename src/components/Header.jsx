@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { TiMessages } from "react-icons/ti";
 import ThemeToggle from "./ThemeToggle";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const Header = ({ sidebarOpen, setSidebarOpen }) => {
+  const { logout } = useAuthContext();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const signout = () => {
+    logout();
+  };
+
   return (
     <header className="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -118,6 +125,9 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
 
             <hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
             <ThemeToggle />
+            <button className="pr-1 pl-2" onClick={signout}>
+              Logout
+            </button>
           </div>
         </div>
       </div>

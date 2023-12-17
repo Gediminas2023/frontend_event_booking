@@ -13,6 +13,7 @@ export const ApiContext = ({ children }) => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState();
+  const [eventListByStuff, setEventListBySuff] = useState([]);
 
   const getUser = async () => {
     await http
@@ -38,6 +39,7 @@ export const ApiContext = ({ children }) => {
       .then((data) => setUser(data.data))
       .catch((err) => toast.error(err.response.data.message));
   };
+
   const deleteUserById = async (id) => {
     await http
       .delete(`/users/${id}`)
@@ -50,7 +52,8 @@ export const ApiContext = ({ children }) => {
   const updateUserById = async (id, data) => {
     await http
       .put(`/users/${id}`, data)
-      .then(() => {
+      .then((e) => {
+        toast.success(e.data);
         getUser();
       })
       .catch((err) => toast.error(err.response.data.message));
@@ -61,27 +64,33 @@ export const ApiContext = ({ children }) => {
       .then(() => {
         getUser();
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err.response.data.message));
   };
 
   const saveEvent = async (id, data) => {
     await http
       .post(`/events/${id}/create`, data)
-      .then(
-        () => navigate("/profile"),
-        toast.success("Event created successfully!!")
-      )
-      .catch((err) => toast.error(err));
+      .then((e) => {
+        navigate("/profile"), toast.success(e.data);
+      })
+      .catch((err) => toast.error(err.response.data.message));
   };
 
   const deleteEventById = async (id) => {
     await http
       .delete(`/events/${id}`)
-      .then(() => getUser(), toast.success("Deleted!"))
-      .catch((err) => toast.error(err));
+      .then(() => {
+        toast.success("Deleted!");
+      })
+      .catch((err) => toast.error(err.response.data.message));
   };
 
-  useEffect(() => {}, []);
+  const getEventsByStuff = async (id) => {
+    await http
+      .get(`/events/byStuffId/${id}`)
+      .then((data) => setEventListBySuff(data.data))
+      .catch((err) => toast.error(err.response.data.message));
+  };
 
   const value = {
     users,
@@ -94,6 +103,8 @@ export const ApiContext = ({ children }) => {
     blockUserById,
     saveEvent,
     deleteEventById,
+    getEventsByStuff,
+    eventListByStuff,
   };
 
   return (

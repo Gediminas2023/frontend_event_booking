@@ -1,14 +1,14 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import avatar from "../assets/200.png";
 import HomeLayout from "../components/HomeLayout";
 import { useAuthContext } from "../contexts/AuthContext";
 import { useAppointment } from "../contexts/ApiContext";
+import EditUserModal from "../components/Modals/AddEditUserModal";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const { authUser } = useAuthContext();
   const { getUserById, user, deleteEventById } = useAppointment();
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     getUserById(authUser.id);
@@ -16,8 +16,22 @@ const Profile = () => {
 
   const deleteEvent = (id) => {
     deleteEventById(id);
-    navigate("/profile");
   };
+
+  const editUser = () => {
+    setShowEditModal(!showEditModal);
+  };
+
+  if (showEditModal) {
+    return (
+      <HomeLayout>
+        <EditUserModal
+          user={user}
+          setShowEditModal={() => setShowEditModal()}
+        />
+      </HomeLayout>
+    );
+  }
 
   return (
     <HomeLayout>
@@ -99,7 +113,10 @@ const Profile = () => {
                 </div>
 
                 <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-                  <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+                  <button
+                    onClick={editUser}
+                    className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                  >
                     Update Profile
                   </button>
                 </div>
@@ -124,9 +141,7 @@ const Profile = () => {
                             >
                               {e.service}
                             </th>
-                            <td className="px-6 py-4">
-                              {e.date ? e.date : "No comming events"}
-                            </td>
+                            <td className="px-6 py-4">{e.date}</td>
                             <td className="px-6 py-4">{e.start}</td>
                             <td className="px-6 py-4">
                               <button

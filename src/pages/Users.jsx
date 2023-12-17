@@ -158,6 +158,8 @@ const Users = () => {
                               : user.roles.map((e) =>
                                   e.name === "ROLE_ADMIN"
                                     ? "text-green-500"
+                                    : user.blocked
+                                    ? "font-medium text-red-600 dark:text-red-700"
                                     : ""
                                 )
                           )}

@@ -12,7 +12,6 @@ export const useAuthContext = () => {
 export const AuthUserContext = ({ children }) => {
   const navigate = useNavigate();
   const [authUser, setAuthUser] = useState();
-  const [success, setSuccess] = useState(false);
 
   const signup = (username, email, password) => {
     http
@@ -43,8 +42,8 @@ export const AuthUserContext = ({ children }) => {
 
   useEffect(() => {
     setAuthUser(JSON.parse(window.localStorage.getItem("auth")));
-  }, [success]);
+  }, []);
 
-  const value = { authUser, login, success, logout, signup };
+  const value = { authUser, login, logout, signup };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

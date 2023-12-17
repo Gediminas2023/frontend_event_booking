@@ -21,10 +21,12 @@ const Calendars = () => {
     dates: null,
     time: null,
     service: null,
+    stuffId: null,
   });
   const [stuffId, setStuffId] = useState();
   const [showModal, setShowModal] = useState(false);
   const services = ["Volume", "Classic", "Addition Volume", "Addition Classic"];
+  const interval = userDate.service === "Volume" ? 120 : 60;
 
   useEffect(() => {
     getUser();
@@ -36,6 +38,7 @@ const Calendars = () => {
 
   const getStuff = (stuff) => {
     setStuffId(stuff);
+    setUserDate((prev) => ({ ...prev, stuffId: stuff }));
     getDateByStuff(stuff);
   };
   const getService = (service) => {
@@ -68,8 +71,6 @@ const Calendars = () => {
         parseInt(selectedDate.times.end.split(":")[0]),
         parseInt(selectedDate.times.end.split(":")[1])
       );
-
-      const interval = userDate.service === "Volume" ? 120 : 60;
 
       const times = [];
       for (let i = starts; i <= ends; i = add(i, { minutes: interval })) {
@@ -244,6 +245,7 @@ const Calendars = () => {
           userDate={userDate}
           authUser={authUser}
           setShowModal={() => setShowModal(!showModal)}
+          interval={interval}
         />
       ) : (
         ""

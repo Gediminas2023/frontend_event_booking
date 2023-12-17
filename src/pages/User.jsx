@@ -15,6 +15,7 @@ const User = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteEventModal, setShowDeleteEventModal] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(user && user.blocked);
 
   const editUser = () => {
     setShowEditModal(!showEditModal);
@@ -38,21 +39,13 @@ const User = () => {
     const data = {
       username: user.username,
       email: user.email,
+      password: user.password,
       blocked: !user.blocked,
-      role: user.roles.map((e) => {
-        if (e.name === "ROLE_ADMIN") {
-          return "admin";
-        }
-        if (e.name === "ROLE_MODERATOR") {
-          return "mod";
-        }
-        if (e.name === "ROLE_USER") {
-          return "user";
-        }
-      }),
+      roles: user.roles.map((e) => e.name),
     };
+
     blockUserById(id, data);
-    navigate("/dashboard/users");
+    setIsBlocked(!isBlocked);
   };
 
   useEffect(() => {
@@ -151,7 +144,7 @@ const User = () => {
                 onClick={blockUser}
                 className="text-white py-2 px-4 uppercase rounded bg-red-800 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
               >
-                {user && user.blocked ? "Unblock" : "Block"}
+                {isBlocked ? "Unblock" : "Block"}
               </button>
             </div>
           </div>
@@ -178,7 +171,6 @@ const User = () => {
                         <td className="px-6 py-4">{e.date}</td>
                         <td className="px-6 py-4">{e.start}</td>
                         <td className="px-6 py-4">
-                          {" "}
                           <button
                             onClick={() => deleteEvent(e.id, user.id)}
                             className="text-white py-2 px-4 uppercase rounded bg-red-800 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"

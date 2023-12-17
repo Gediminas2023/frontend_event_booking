@@ -1,13 +1,8 @@
 import React from "react";
-import { format } from "date-fns";
+import { format, parse, addMinutes } from "date-fns";
 import { useAppointment } from "../../contexts/ApiContext";
 
-const AppointmentModal = ({
-  authUser,
-  userDate,
-  setShowModal,
-  updateBookedTimes,
-}) => {
+const AppointmentModal = ({ authUser, userDate, setShowModal, interval }) => {
   const { saveEvent } = useAppointment();
   const time = new Date(userDate.time);
   const formattedTime = format(time, "HH:mm");
@@ -16,12 +11,19 @@ const AppointmentModal = ({
 
   const handleClick = async () => {
     const data = {
-      stuff: userDate.stuff,
+      stuffId: userDate.stuffId,
       date: formattedDate,
       start: formattedTime,
+      end: calculateEndTime(formattedTime, interval),
       service: userDate.service,
     };
     await saveEvent(authUser.id, data);
+  };
+  const calculateEndTime = (startTime, interval) => {
+    const startTimeObj = parse(startTime, "HH:mm", new Date());
+    const endTimeObj = addMinutes(startTimeObj, interval);
+    const formattedEndTime = format(endTimeObj, "HH:mm");
+    return formattedEndTime;
   };
 
   return (

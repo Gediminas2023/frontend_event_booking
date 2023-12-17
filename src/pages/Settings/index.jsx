@@ -183,57 +183,63 @@ const Settings = () => {
                 </tr>
               </thead>
               <tbody className="text-sm divide-y divide-slate-100 dark:divide-slate-700">
-                {selectedDates
-                  .filter((date) => date.stuffId === stuffId)
-                  .filter(
-                    (e) =>
-                      isToday(new Date(e.date)) || new Date(e.date) > new Date()
-                  )
-                  .map((date, i) => (
-                    <tr key={i}>
-                      <td className="p-2 whitespace-nowrap ">
-                        <div className="flex items-center ">
-                          {formatDate(date.date)}
-                        </div>
-                      </td>
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-left">
-                          <TimePicker
-                            onChange={(e) => handleHourStart(date.date, e)}
-                            value={date.times.start}
-                          />
-                        </div>
-                      </td>
-                      <td className="p-2 whitespace-nowrap">
-                        <div className="text-left">
-                          <TimePicker
-                            onChange={(e) => handleHourEnd(date.date, e)}
-                            value={date.times.end}
-                          />
-                        </div>
-                      </td>
-                      <td className="p-2 whitespace-nowrap">
-                        <button
-                          onClick={() => removeByIdDate(date.id)}
-                          className="border border-gray-500 text-red-700 font-semibold p-1"
-                        >
-                          X
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                {dateListByStuff &&
+                  selectedDates
+                    .filter((date) => date.stuffId === stuffId)
+                    .filter(
+                      (e) =>
+                        isToday(new Date(e.date)) ||
+                        new Date(e.date) > new Date()
+                    )
+                    .map((date, i) => (
+                      <tr key={i}>
+                        <td className="p-2 whitespace-nowrap ">
+                          <div className="flex items-center ">
+                            {formatDate(date.date)}
+                          </div>
+                        </td>
+                        <td className="p-2 whitespace-nowrap">
+                          <div className="text-left">
+                            <TimePicker
+                              onChange={(e) => handleHourStart(date.date, e)}
+                              value={date.times.start}
+                            />
+                          </div>
+                        </td>
+                        <td className="p-2 whitespace-nowrap">
+                          <div className="text-left">
+                            <TimePicker
+                              onChange={(e) => handleHourEnd(date.date, e)}
+                              value={date.times.end}
+                            />
+                          </div>
+                        </td>
+                        <td className="p-2 whitespace-nowrap">
+                          <button
+                            onClick={() => removeByIdDate(date.id)}
+                            className="border border-gray-500 text-red-700 font-semibold p-1"
+                          >
+                            X
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
             <div className="space-x-8 flex justify-between  md:mt-4 md:justify-center">
               {stuffId ? " " : "Please select stuff."}
             </div>
             <div className="space-x-8 flex justify-between  md:mt-4 md:justify-end">
-              <button
-                onClick={handleSaveSubmit}
-                className="text-gray-600 py-2 px-4 uppercase rounded bg-green-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-              >
-                Save
-              </button>
+              {stuffId ? (
+                <button
+                  onClick={handleSaveSubmit}
+                  className="text-gray-600 py-2 px-4 uppercase rounded bg-green-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+                >
+                  Save
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

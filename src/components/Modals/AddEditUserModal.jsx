@@ -1,39 +1,38 @@
 import { useState } from "react";
 import { useAppointment } from "../../contexts/ApiContext";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const DeleteUserModal = ({ user, setShowEditModal }) => {
   const { updateUserById, saveUser } = useAppointment();
-  const { id } = useParams();
+
   const navigate = useNavigate();
   const [username, setUsername] = useState((user && user.username) || "");
   const [email, setEmail] = useState((user && user.email) || "");
-  const [roles, setRole] = useState((user && user.roles) || "user");
-  const [blocked, setBlocked] = useState((user && user.blocked) || false);
+  const [roles, setRole] = useState(user && user.roles.map((e) => e.name));
   const [password, setPassword] = useState((user && user.password) || "");
 
   const handlerUserUpdate = () => {
-    const data = {
-      username: username,
-      email: email,
-      password: password,
-      role: [roles],
-    };
-
-    // const data = {
-    //   username: userName,
-    //   email: userEmail,
-    //   roles: [],
-    //   blocked: blocked,
-    //   password: password,
-    // };
     if (user) {
-      updateUserById(id, data);
+      const update = {
+        username: username,
+        email: email,
+        password: password,
+        roles: [roles],
+        blocked: user.blocked,
+      };
 
+      updateUserById(user.id, update);
       setShowEditModal(false);
       navigate("/dashboard/users");
     } else {
-      saveUser(data);
+      const save = {
+        username: username,
+        email: email,
+        password: password,
+        roles: [roles],
+      };
+
+      saveUser(save);
       setShowEditModal(false);
       navigate("/dashboard/users");
     }
@@ -94,12 +93,15 @@ const DeleteUserModal = ({ user, setShowEditModal }) => {
               <select
                 id="underline_select"
                 className="bg-transparent pb-2 border-b w-18 pt-4 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                value={roles}
+                defaultValue={"DEFAULT"}
                 onChange={(e) => addRole(e.target.value)}
               >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-                <option value="mod">Moderator</option>
+                <option value="DEFAULT" disabled>
+                  Choose a role
+                </option>
+                <option value="ROLE_USER">User</option>
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_MODERATOR">Moderator</option>
               </select>
             </div>
           </div>

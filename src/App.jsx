@@ -72,15 +72,7 @@ function App() {
                   </PrivateAdminRoute>
                 }
               />
-              <Route
-                exact
-                path="/users/:id"
-                element={
-                  <PrivateAdminRoute>
-                    <User />
-                  </PrivateAdminRoute>
-                }
-              />
+              <Route exact path="/users/:id" element={<User />} />
               <Route
                 exact
                 path="/profile"
@@ -90,7 +82,6 @@ function App() {
                   </PrivateRoute>
                 }
               />
-
               <Route exact path="/" element={<Home />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/signup" element={<Signup />} />
